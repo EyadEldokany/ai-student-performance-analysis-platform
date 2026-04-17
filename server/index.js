@@ -5,8 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
 const NVIDIA_API_KEY =
-  process.env.NVIDIA_API_KEY ||
-  "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";
+  process.env.NVIDIA_API_KEY;
 
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
