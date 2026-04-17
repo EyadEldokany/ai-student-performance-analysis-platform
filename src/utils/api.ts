@@ -1,7 +1,13 @@
 import { ExerciseQuiz, Student, StudentLevel } from '../types';
 import { getLevelLabel } from './analysis';
 
-const NIM_PROXY_URL = 'http://localhost:3001/api/nim/chat';
+// In production (Vercel), use a relative path so it hits the serverless function.
+// In development, fall back to the local Express proxy on port 3001.
+const NIM_PROXY_URL =
+  import.meta.env.PROD
+    ? '/api/nim/chat'
+    : 'http://localhost:3001/api/nim/chat';
+
 const MODEL = 'qwen/qwen3.5-397b-a17b';
 
 type ChatMessage = { role: string; content: string };
