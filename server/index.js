@@ -4,8 +4,7 @@ import express from "express";
 const app = express();
 const PORT = process.env.PORT || 3001;
 const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
-const NVIDIA_API_KEY =
-  process.env.NVIDIA_API_KEY;
+const NVIDIA_API_KEY =process.env.NVIDIA_API_KEY;
 
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
