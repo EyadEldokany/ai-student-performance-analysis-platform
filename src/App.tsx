@@ -14,7 +14,7 @@ const NAV_ITEMS = [
   { key: 'input', labelKey: 'dataInput', icon: Database },
   { key: 'dashboard', labelKey: 'dashboard', icon: LayoutDashboard },
   { key: 'categories', labelKey: 'studentCategories', icon: Users },
-  { key: 'skills', labelKey: 'skillsMatrix', icon: Grid3X2 },
+  { key: 'skills', labelKey: 'skillsMatrix', icon: Grid3X3 },
   { key: 'plans', labelKey: 'remedialPlan', icon: BookOpen },
   { key: 'worksheet', labelKey: 'worksheetGenerator', icon: FileSpreadsheet },
 ];
