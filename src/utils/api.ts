@@ -322,3 +322,114 @@ Write a detailed and organized plan in English.`;
 
   return callNvidiaNIM([{ role: 'user', content: prompt }]);
 }
+
+export interface ExtractedSkills {
+  subject: string;
+  gradeLevel: string;
+  skills: string[];
+  topics: string[];
+  questionTypes: string[];
+  difficulty: string;
+  curriculumStandards: string[];
+}
+
+export interface WorksheetSection {
+  sectionTitle: string;
+  skillFocus: string;
+  questions: Array<{
+    question: string;
+    type: string;
+    points: number;
+    answer: string;
+  }>;
+}
+
+export interface GeneratedWorksheet {
+  title: string;
+  subject: string;
+  targetSkills: string[];
+  sections: WorksheetSection[];
+  totalPoints: number;
+  estimatedTime: string;
+  difficulty: string;
+}
+
+export async function analyzeExamImage(imageData: string): Promise<ExtractedSkills> {
+  const response = await fetch(NIM_PROXY_URL.replace('/chat', '/analyze-image'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      imageData,
+    }),
+  });
+
+  if (!response.ok) {
+    let errorMessage = `API Error (${response.status})`;
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData?.error ? `${errorMessage}: ${errorData.error}` : errorMessage;
+    } catch {
+      const errorText = await response.text();
+      if (errorText) {
+        errorMessage = `${errorMessage}: ${errorText}`;
+      }
+    }
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+  const content = data.choices?.[0]?.message?.content || 'No response generated';
+  
+  // Extract JSON from response
+  const jsonString = extractJsonObject(content);
+  return JSON.parse(jsonString) as ExtractedSkills;
+}
+
+export async function generateWorksheetFromSkills(
+  skills: string[],
+  topics: string[],
+  subject: string,
+  level: string,
+  studentLevels: string[],
+  language: 'ar' | 'en',
+  maxScore: number
+): Promise<GeneratedWorksheet> {
+  const response = await fetch(NIM_PROXY_URL.replace('/chat', '/generate-worksheet'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      skills,
+      topics,
+      subject,
+      level,
+      studentLevels,
+      language,
+      maxScore,
+    }),
+  });
+
+  if (!response.ok) {
+    let errorMessage = `API Error (${response.status})`;
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData?.error ? `${errorMessage}: ${errorData.error}` : errorMessage;
+    } catch {
+      const errorText = await response.text();
+      if (errorText) {
+        errorMessage = `${errorMessage}: ${errorText}`;
+      }
+    }
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+  const content = data.choices?.[0]?.message?.content || 'No response generated';
+  
+  // Extract JSON from response
+  const jsonString = extractJsonObject(content);
+  return JSON.parse(jsonString) as GeneratedWorksheet;
+}

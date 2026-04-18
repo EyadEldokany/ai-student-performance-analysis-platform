@@ -188,6 +188,7 @@ export const translations: Record<string, Record<'ar' | 'en', string>> = {
   restartQuiz: { ar: 'إعادة الاختبار', en: 'Restart Quiz' },
   questionLabel: { ar: 'السؤال', en: 'Question' },
   quizComplete: { ar: 'تم إكمال الاختبار', en: 'Quiz Complete' },
+  worksheetGenerator: { ar: 'أوراق العمل', en: 'Worksheets' },
 };
 
 export function t(key: string, lang: 'ar' | 'en'): string {

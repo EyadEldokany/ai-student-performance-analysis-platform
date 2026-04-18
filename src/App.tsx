@@ -6,15 +6,17 @@ import Dashboard from './components/Dashboard';
 import StudentCategories from './components/StudentCategories';
 import SkillsMatrix from './components/SkillsMatrix';
 import PlansExercises from './components/PlansExercises';
+import WorksheetGenerator from './components/WorksheetGenerator';
 import ApiSettings from './components/ApiSettings';
-import { Database, LayoutDashboard, Users, Grid3X3, BookOpen, Trash2 } from 'lucide-react';
+import { Database, LayoutDashboard, Users, Grid3X3, BookOpen, Trash2, FileSpreadsheet } from 'lucide-react';
 
 const NAV_ITEMS = [
   { key: 'input', labelKey: 'dataInput', icon: Database },
   { key: 'dashboard', labelKey: 'dashboard', icon: LayoutDashboard },
   { key: 'categories', labelKey: 'studentCategories', icon: Users },
-  { key: 'skills', labelKey: 'skillsMatrix', icon: Grid3X3 },
+  { key: 'skills', labelKey: 'skillsMatrix', icon: Grid3X2 },
   { key: 'plans', labelKey: 'remedialPlan', icon: BookOpen },
+  { key: 'worksheet', labelKey: 'worksheetGenerator', icon: FileSpreadsheet },
 ];
 
 function AppContent() {
@@ -29,6 +31,7 @@ function AppContent() {
       case 'categories': return <StudentCategories />;
       case 'skills': return <SkillsMatrix />;
       case 'plans': return <PlansExercises />;
+      case 'worksheet': return <WorksheetGenerator />;
       default: return <DataInput />;
     }
   };
